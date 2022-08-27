@@ -107,7 +107,7 @@ router.post('/modificar', async (req, res, next) => {
             img_id = null;
             borrar_img_vieja = true;
         } else {
-            if (req.files && Object.keys(req.files).length > 0){
+            if (req.files && Object.keys(req.files).length > 0) {
                 imagen = req.files.imagen;
                 img_id = (await uploader(imagen.tempFilePath)).public_id;
             }
@@ -118,28 +118,28 @@ router.post('/modificar', async (req, res, next) => {
 
 
 
-        var obj = {
-            titulo: req.body.titulo,
-            subtitulo: req.body.subtitulo,
-            cuerpo: req.body.cuerpo,
-            img_id:
-        }
+        //var obj = {
+        // titulo: req.body.titulo,
+        // subtitulo: req.body.subtitulo,
+        // cuerpo: req.body.cuerpo,
+        //  img_id:
+   // }
         //console.log(obj)
 
         await novedadesModel.modificarNovedadById(obj, req.body.id);
-        res.redirect('/admin/novedades');
+    res.redirect('/admin/novedades')
 
-    } catch (error) {
-        console.log(error)
-        res.render('admin/modificar', {
-            layout: 'admin/layout',
-            error: true,
-            message: 'No se modifico la novedad'
-        })
-    }
-})
-
+} catch (error) {
+    console.log(error)
+    res.render('admin/modificar', {
+        layout: 'admin/layout',
+        error: true,
+        message: 'No se modifico la novedad'
+    })
+}
 
 
 
-module.exports = router;
+
+
+module.exports = router;})

@@ -1,13 +1,13 @@
-var express = require('express');
-var router = express.Router();
+var express = require('express'); //
+var router = express.Router(); //
 var usuariosModel = require('./../../models/usuariosModel');
 
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.render('admin/login', {
-        layout: 'admin/layout'
+        layout: 'admin/layout',
     });
-});
+}); //
 
 router.get('/logout', function (req, res, next){
     res.session.destroy();
@@ -43,4 +43,4 @@ router.post('/', async (req, res, next) => {
     }
 })
 
-module.exports = router;
+module.exports = router; //

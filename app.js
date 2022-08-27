@@ -11,7 +11,7 @@ var session = require('express-session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
-var loginRouter = require('./routes/admin/login');
+var loginRouter = require('./routes/admin/login'); //
 var adminRouter = require('./routes/admin/novedades');
 var apiRouter = require('./routes/api');
 
@@ -57,7 +57,7 @@ app.use(fileUpload({
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
-app.use('/admin/login', loginRouter);
+app.use('/admin/login', loginRouter);  //
 app.use('/admin/novedades', secured, adminRouter);
 app.use('/api', cors() ,apiRouter);
 
@@ -67,6 +67,8 @@ app.use(function(req, res, next) {
 });
 
 // error handler
+
+
 app.use(function(err, req, res, next) {
   // set locals, only providing error in development
   res.locals.message = err.message;
