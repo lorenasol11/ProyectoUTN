@@ -1,8 +1,8 @@
 var express = require('express');
 var router = express.Router();
 var novedadesModel = require('../../models/novedadesModel');
-const util = require('util');
-const cloudinary = require('cloudinary').v2;
+var util = require('util');
+var cloudinary = require('cloudinary').v2;
 const uploader = util.promisify(cloudinary.uploader.upload);
 const destroy = util.promisify(cloudinary.uploader.destroy);
 
@@ -42,7 +42,7 @@ router.get('/', async function (req, res, next) {
 router.get('/agregar', (req, res, next) => {
     res.render('admin/agregar', {
         layout: 'admin/layout'
-    }) //cierra el render
+    }); //cierra el render
 
 }); // cierra el get
 
@@ -62,7 +62,7 @@ router.post('/agregar', async (req, res, next) => {
             });
             res.redirect('/admin/novedades')
         } else {
-            res.render('/admin/agregar', {
+            res.render('admin/agregar', {
                 layout: admin / layout,
                 error: true,
                 message: 'Todos los campos son requeridos'
@@ -71,12 +71,12 @@ router.post('/agregar', async (req, res, next) => {
     } catch (error) {
         console.log(error)
         res.render('admin/agregar', {
-            layout: admin / layout,
+            layout: 'admin/layout',
             error: true,
-            message: 'o se cargo la novedad'
-        })
+            message: 'No se cargo la novedad'
+        });
     }
-})
+});
 
 /*para eliminar novedad*/
 router.get('/eliminar/:id', async (req, res, next) => {
@@ -96,13 +96,13 @@ router.get('/modificar/id', async (req, res, next) => {
     res.render('admin/modificar', {
         layout: 'admin/layout',
         novedad
-    })
-})
+    });
+});
 
 router.post('/modificar', async (req, res, next) => {
     try {
-        let img_id = req.body.img_original; //Let?
-        let borrar_img_vieja = false;  //Let?
+        let img_id = req.body.img_original;
+        let borrar_img_vieja = false;
         if (req.body.img_delete === "1") {
             img_id = null;
             borrar_img_vieja = true;
@@ -116,30 +116,25 @@ router.post('/modificar', async (req, res, next) => {
             await (destroy(req.body.img_original));
         }
 
-
-
-        //var obj = {
-        // titulo: req.body.titulo,
-        // subtitulo: req.body.subtitulo,
-        // cuerpo: req.body.cuerpo,
-        //  img_id:
-   // }
+        let obj = {
+            titulo: req.body.titulo,
+            subtitulo: req.body.subtitulo,
+            cuerpo: req.body.cuerpo,
+            img_id
+    };
         //console.log(obj)
 
         await novedadesModel.modificarNovedadById(obj, req.body.id);
-    res.redirect('/admin/novedades')
+        res.redirect('/admin/novedades');
 
-} catch (error) {
-    console.log(error)
-    res.render('admin/modificar', {
-        layout: 'admin/layout',
-        error: true,
-        message: 'No se modifico la novedad'
-    })
-}
+    } catch (error) {
+        console.log(error)
+        res.render('admin/modificar', {
+            layout: 'admin/layout',
+            error: true,
+            message: 'No se modifico la novedad'
+        });
+    }
+});
 
-
-
-
-
-module.exports = router;})
+module.exports = router;

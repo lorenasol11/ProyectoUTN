@@ -6,7 +6,7 @@ async function getNovedades() {
     return rows;
 }
 
-async function insertNovedad (obj) {
+async function insertNovedad(obj) {
     try {
         var query = 'insert into novedades set ?';
         var rows = await pool.query(query, [obj])
@@ -41,4 +41,4 @@ async function modificarNovedadById(obj, id) {
     }
 }
 
-module.exports = { getNovedades, insertNovedad, deleteNovedadesById, getNovedadById, modificarNovedadById }
+module.exports = {getNovedades, insertNovedad, deleteNovedadesById, getNovedadById, modificarNovedadById }

@@ -5,12 +5,12 @@ var usuariosModel = require('./../../models/usuariosModel');
 /* GET home page. */
 router.get('/', function (req, res, next) {
     res.render('admin/login', {
-        layout: 'admin/layout',
+        layout: 'admin/layout'
     });
-}); //
+});
 
 router.get('/logout', function (req, res, next){
-    res.session.destroy();
+    req.session.destroy();
     res.render('admin/login', {
         layout: 'admin/layout'
     });
@@ -26,14 +26,12 @@ router.post('/', async (req, res, next) => {
         var data = await usuariosModel.getUserByUserNameAndPassword(usuario, password);
 
         if (data != undefined){
-
             req.session.id_usuario = data.id;
             req.session.nombre = data.usuario;
-
             res.redirect('/admin/novedades');
         } else {
-            res.render('/admin/login', {
-                layout: '/admin/layout' ,
+            res.render('admin/login', {
+                layout: 'admin/layout',
                 error: true
             });
         }
@@ -43,4 +41,4 @@ router.post('/', async (req, res, next) => {
     }
 })
 
-module.exports = router; //
+module.exports = router;

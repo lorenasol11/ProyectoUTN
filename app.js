@@ -31,10 +31,10 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use(session({
   secret: 'PW2021awqyeudj',
-  cookie: {maxAge: null },
+  cookie: {maxAge: null},
   resave: false,
   saveUninitialized: true
-}))
+}));
 
 secured = async (req, res, next) => {
   try {
@@ -49,7 +49,7 @@ secured = async (req, res, next) => {
   }// cierro catch error
 } // cierro secured
 
-app.use(fileUpload({
+app.use(fileupload({
   useTempFiles: true,
   tempFileDir: '/tmp/'
 }));
