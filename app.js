@@ -49,7 +49,7 @@ secured = async (req, res, next) => {
   }// cierro catch error
 } // cierro secured
 
-app.use(fileupload({
+app.use(fileUpload({
   useTempFiles: true,
   tempFileDir: '/tmp/'
 }));
