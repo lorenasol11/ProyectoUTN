@@ -5,6 +5,7 @@ var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var fileUpload = require('express-fileupload');
 var cors = require('cors');
+var nodemailer = require('nodemailer');
 
 require('dotenv').config();
 var session = require('express-session');
@@ -14,6 +15,7 @@ var usersRouter = require('./routes/users');
 var loginRouter = require('./routes/admin/login'); //
 var adminRouter = require('./routes/admin/novedades');
 var apiRouter = require('./routes/api');
+const router = require('./routes/index');
 
 //const { truncate } = require('fs');
 
@@ -78,5 +80,31 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+
+router.post('/contacto', async (req, res) => {
+    const mail = {
+      to:'louresol11@gmail.com',
+      subject: 'Contacto Web',
+      html: `${req.body.nombre} se contacto a traves de la web y quiere mas informacion a este correo: ${req.body.email} <br> Además, hizo el siguiente comentario: ${req.body.mensaje} <br> Su tel es: ${req.body.telefono}`
+    }
+
+    const trekking = nodemailer.trekking ({
+      host: process.env.SMTP_HOST,
+      port: process.env.SMTP_PORT,
+      auth: {
+        user: process.env.SMTP_USER,
+        pass: process.env.SMTP_PASS,
+      }
+    }); //cierra transp
+
+    await trekking.sendMail(mail)
+
+    res.status(201).json({
+      error: false,
+      message: 'Mensaje enviado'
+    });
+    
+}); //cierro post/api
 
 module.exports = app;
