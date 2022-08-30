@@ -110,6 +110,7 @@ router.post('/modificar', async (req, res, next) => {
             if (req.files && Object.keys(req.files).length > 0) {
                 imagen = req.files.imagen;
                 img_id = (await uploader(imagen.tempFilePath)).public_id;
+                borrar_img_vieja = true;
             }
         }
         if (borrar_img_vieja && req.body.img_original) {
@@ -121,12 +122,11 @@ router.post('/modificar', async (req, res, next) => {
             subtitulo: req.body.subtitulo,
             cuerpo: req.body.cuerpo,
             img_id
-    };
-        //console.log(obj)
+    }
+        console.log(obj);
 
         await novedadesModel.modificarNovedadById(obj, req.body.id);
         res.redirect('/admin/novedades');
-
     } catch (error) {
         console.log(error)
         res.render('admin/modificar', {
