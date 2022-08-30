@@ -90,9 +90,11 @@ router.get('/eliminar/:id', async (req, res, next) => {
     res.redirect('/admin/novedades');
 }); //cierra el get de eliminar
 
-router.get('/modificar/id', async (req, res, next) => {
+
+
+router.get('/modificar/:id', async (req, res, next) => {
     var id = req.params.id;
-    //console.log(req.params.id);
+    let novedad = await novedadesModel.getNovedadById(id);
     res.render('admin/modificar', {
         layout: 'admin/layout',
         novedad
@@ -116,6 +118,7 @@ router.post('/modificar', async (req, res, next) => {
         if (borrar_img_vieja && req.body.img_original) {
             await (destroy(req.body.img_original));
         }
+        
 
         let obj = {
             titulo: req.body.titulo,
@@ -133,7 +136,7 @@ router.post('/modificar', async (req, res, next) => {
             layout: 'admin/layout',
             error: true,
             message: 'No se modifico la novedad'
-        });
+        })
     }
 });
 
